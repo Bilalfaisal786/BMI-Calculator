@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <style>
+        p{
+            font-size: 2em;
+
+        }
+        #heightinfeet {
+            width: 3em;
+            margin: 0.5em;
+        }
+
+        #heightininches {
+            width: 4em;
+            margin: 0.5em;
+        }
+
+        #weight {
+            width: 3em;
+            margin: 0.5em;
+        }
+
+        body {
+            background-color: black;
+        display: flex;
+        /* justify-items: center; */
+        }
+
+
+        h4 {
+            margin-top: 2em;
+            color: gold;
+            margin-left: -0.5em;
+            font-size: 3em;
+            padding: 0em;
+            margin-bottom: 1em;
+        }
+
+        /* .box2 {
+            display: flex;
+        } */
+
+        .box {
+            width: 23em;
+            color: yellow;
+            height: 19em;
+            padding: 4em 0em 4em 4em;
+            margin: 4em 8em 18em 0em;
+            background-color: purple;
+            border: 1px solid black;
+            border-radius: 3em;
+            box-sizing: border-box;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.75em 1.25em 0.75em 1.25em;
+            margin-left: 4em;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style> -->
+    
+    <style>
+         form{
+        font-size: 1.25em;}
+        p {
+            font-size: 1.25em;
+        }
+    
+        #heightinfeet {
+            width: 3em;
+            margin: 0.5em;
+            /* font-size: 1em; */
+        }
+    
+        #heightininches {
+            width: 4em;
+            /* font-size: 1em; */
+            margin: 0.5em;
+        }
+    
+        #weight {
+            width: 3em;
+            /* font-size: 0.6em; */
+            margin: 0.5em;
+        }
+    
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center; /* Center align content horizontally */
+            align-items: center; /* Center align content vertically */
+            height: 100vh; /* Set the body to fill the viewport height */
+            margin: 0; /* Remove default margin to prevent extra spacing */
+        }
+    
+        h3 {
+            color: gold;
+            font-size: 3em;
+            margin: 1em;
+        }
+    
+        .box {
+            width: 90%; /* Adjusted width for responsiveness */
+            max-width: 30em; /* Maximum width to maintain readability */
+            color: yellow;
+            padding: 2em; /* Adjusted padding */
+            margin: 0 auto; /* Center the box horizontally */
+            background-color: purple;
+            border: 1px solid black;
+            border-radius: 2em;
+            box-sizing: border-box;
+            text-align: center; /* Center align text */
+        }
+    
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.75em 1.25em;
+            margin-top: 1em;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    
+        .box2 {
+            margin-top: 1em;
+        }
+    
+        h4 {
+            color: gold;
+            font-size: 1.25em;
+            margin: 0;
+        }
+   
+        /* Responsive Media Query */
+        @media screen and (max-width: 768px) {
+            .box {
+                width: 80%; /* Adjusted width for smaller screens */
+            }
+        }
+    </style>
+    
+</head>
+
+<body>
+    <h3>Calculate Your Body Mass Index</h3>
+    <div class="box">
+        <form onsubmit="calculatebmi(); return false">
+            <label for="heightinfeet">Input Your Height</label>
+            
+            <input required step="1" type="number" id="heightinfeet" maxlength="2" min="0" max="10" placeholder="feet">
+            
+            <input required step="1" type="number" id="heightininches" maxlength="2" min="0" max="11"
+            placeholder="inches">
+            <br><br>
+           
+            <label for="weight">Input Your Weight</label>
+            
+            <input required step="0.1" type="number" id="weight" maxlength="3" min="0" max="200" placeholder="kg">
+            <br><br><br>
+            
+            <button class="button">Calculate</button>
+        </form>
+        <div class="box2">
+            <h4 id="idealweight"></h4>
+            <p id="title1"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculatebmi() {
+            let heightinfeet = document.getElementById("heightinfeet").value;
+            let heightininches = document.querySelector("#heightininches").value;
+            let weight = document.querySelector("#weight").value;
+
+            heightinfeet = parseInt(heightinfeet);
+            heightininches = parseInt(heightininches);
+            heightininches += heightinfeet * 12;
+            let heightinmeter = heightininches / 39.37;
+            heightinmeter = heightinmeter * heightinmeter;
+
+            let bmi = weight / heightinmeter;
+            let idealweight = 22 * heightinmeter.toFixed(2);
+            let weighttolose = (weight - idealweight).toFixed(2);
+            let weighttogain = (idealweight - weight).toFixed(2);
+
+            let title;
+
+            if (bmi > 30) {
+                title = `You are Obese. You need to lose ${weighttolose} kg`;
+            } else if (bmi > 25) {
+                title = `You are Overweight. You need to lose ${weighttolose} kgs`;
+            } else if (bmi > 18.5) {
+                if (bmi > 22) {
+                    title = `You are Normal. But you may need to lose ${weight - idealweight} kgs to become ideally fit`;
+                } else if (parseInt(bmi) === 22) {
+                    title = `You are Normal`;
+                } else {
+                    title = `You are Normal. But you may need to gain ${weighttogain} kgs to become ideally fit`;
+                }
+            } else if (bmi < 18.5) {
+                title = `You are Underweight. You need to gain ${weighttogain} kg to become normal`;
+            }
+
+            document.querySelector("#idealweight").innerHTML = `Ideal Weight: ${parseInt(idealweight)} kg`;
+            document.querySelector("#title1").innerHTML = title;
+        }
+    </script>
+</body>
+
+</html>
